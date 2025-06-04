@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
-  
-   
   "scripts": {
-  "postinstall": "npx prisma generate --schema=./db/prisma/schema.prisma",
-  "start": "node app.js",
-  "dev": "nodemon app.js",
-  "postdeploy": "npx prisma migrate deploy --schema=./db/prisma/schema.prisma"
-},
-
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "postdeploy": "npx prisma migrate deploy --schema=./db/prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
