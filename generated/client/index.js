@@ -202,6 +202,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -228,8 +232,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String         @id @default(uuid())\n  username      String         @unique\n  email         String         @unique @default(\"default@example.com\")\n  phone         String?\n  password      String\n  gender        Gender?\n  age           Int?\n  preferences   Preference?\n  listings      Flat[]         @relation(\"UserFlats\")\n  flatmatePosts FlatmatePost[]\n  bookmarks     Bookmark[]\n  createdAt     DateTime       @default(now())\n}\n\nmodel Flat {\n  id              String     @id @default(uuid())\n  title           String\n  description     String\n  city            String\n  address         String\n  verified        Boolean    @default(true)\n  rent            Int\n  availableFrom   DateTime\n  postedBy        User       @relation(\"UserFlats\", fields: [postedById], references: [id])\n  postedById      String\n  roommates       Int\n  preferredGender Gender\n  isAvailable     Boolean    @default(true)\n  createdAt       DateTime   @default(now())\n  bookmarks       Bookmark[]\n}\n\nmodel FlatmatePost {\n  id              String     @id @default(uuid())\n  user            User       @relation(fields: [userId], references: [id])\n  userId          String\n  city            String\n  budgetMin       Int\n  budgetMax       Int\n  ageMin          Int\n  ageMax          Int\n  preferredGender Gender\n  moveInDate      DateTime\n  occupation      String?\n  habits          String?\n  description     String?\n  createdAt       DateTime   @default(now())\n  bookmarks       Bookmark[]\n}\n\nmodel Preference {\n  id              String  @id @default(uuid())\n  city            String?\n  budgetMin       Int?\n  budgetMax       Int?\n  preferredGender Gender?\n  user            User    @relation(fields: [userId], references: [id])\n  userId          String  @unique\n}\n\nmodel Bookmark {\n  id             String        @id @default(uuid())\n  user           User          @relation(fields: [userId], references: [id])\n  userId         String\n  flat           Flat?         @relation(fields: [flatId], references: [id])\n  flatId         String?\n  flatmatePost   FlatmatePost? @relation(fields: [flatmatePostId], references: [id])\n  flatmatePostId String?\n  createdAt      DateTime      @default(now())\n}\n\nenum Gender {\n  MALE\n  FEMALE\n  ANY\n}\n",
-  "inlineSchemaHash": "cfbdc9d5e426c9b9ba07d6ce41fa5014d068f04c895f59c264622384961deff9",
+  "inlineSchema": "// This is your Prisma schema file\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../../generated/client\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String         @id @default(uuid())\n  username      String         @unique\n  email         String         @unique @default(\"default@example.com\")\n  phone         String?\n  password      String\n  gender        Gender?\n  age           Int?\n  preferences   Preference?\n  listings      Flat[]         @relation(\"UserFlats\")\n  flatmatePosts FlatmatePost[]\n  bookmarks     Bookmark[]\n  createdAt     DateTime       @default(now())\n}\n\nmodel Flat {\n  id              String     @id @default(uuid())\n  title           String\n  description     String\n  city            String\n  address         String\n  verified        Boolean    @default(true)\n  rent            Int\n  availableFrom   DateTime\n  postedBy        User       @relation(\"UserFlats\", fields: [postedById], references: [id])\n  postedById      String\n  roommates       Int\n  preferredGender Gender\n  isAvailable     Boolean    @default(true)\n  createdAt       DateTime   @default(now())\n  bookmarks       Bookmark[]\n}\n\nmodel FlatmatePost {\n  id              String     @id @default(uuid())\n  user            User       @relation(fields: [userId], references: [id])\n  userId          String\n  city            String\n  budgetMin       Int\n  budgetMax       Int\n  ageMin          Int\n  ageMax          Int\n  preferredGender Gender\n  moveInDate      DateTime\n  occupation      String?\n  habits          String?\n  description     String?\n  createdAt       DateTime   @default(now())\n  bookmarks       Bookmark[]\n}\n\nmodel Preference {\n  id              String  @id @default(uuid())\n  city            String?\n  budgetMin       Int?\n  budgetMax       Int?\n  preferredGender Gender?\n  user            User    @relation(fields: [userId], references: [id])\n  userId          String  @unique\n}\n\nmodel Bookmark {\n  id             String        @id @default(uuid())\n  user           User          @relation(fields: [userId], references: [id])\n  userId         String\n  flat           Flat?         @relation(fields: [flatId], references: [id])\n  flatId         String?\n  flatmatePost   FlatmatePost? @relation(fields: [flatmatePostId], references: [id])\n  flatmatePostId String?\n  createdAt      DateTime      @default(now())\n}\n\nenum Gender {\n  MALE\n  FEMALE\n  ANY\n}\n",
+  "inlineSchemaHash": "0f990f9cc90c8ad3a9398b424d4662c200f432de8c3a5d6a7055d2682766bb69",
   "copyEngine": true
 }
 
@@ -270,6 +274,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "../generated/client/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "../generated/client/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "../generated/client/schema.prisma")
